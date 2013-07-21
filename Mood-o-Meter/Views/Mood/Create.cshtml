@@ -1,0 +1,55 @@
+@model Mood_o_Meter.Models.Mood
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset class="form-horizontal">
+        <legend>Mood</legend>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Username, new { @class = "control-label" })
+			<div class="controls">
+			    @Html.EditorFor(model => model.Username)
+				@Html.ValidationMessageFor(model => model.Username, null, new { @class = "help-inline" })
+			</div>
+		</div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Timestamp, new { @class = "control-label" })
+			<div class="controls">
+				@Html.EditorFor(model => model.Timestamp)
+				@Html.ValidationMessageFor(model => model.Timestamp, null, new { @class = "help-inline" })
+			</div>
+		</div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Moood, new { @class = "control-label" })
+			<div class="controls">
+				@Html.EditorFor(model => model.Moood)
+				@Html.ValidationMessageFor(model => model.Moood, null, new { @class = "help-inline" })
+			</div>
+		</div>
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Create" class="btn" />
+        </div>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

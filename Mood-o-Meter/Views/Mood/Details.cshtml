@@ -1,0 +1,42 @@
+@model Mood_o_Meter.Models.Mood
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+	<legend>Mood</legend>
+	<dl>
+		<dt>
+			@Html.DisplayNameFor(model => model.Username)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Username)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Timestamp)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Timestamp)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Moood)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Moood)
+		</dd>
+
+	</dl>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

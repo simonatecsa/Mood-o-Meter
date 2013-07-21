@@ -1,0 +1,48 @@
+@model Mood_o_Meter.Models.Mood
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Mood</legend>
+
+	<dl>
+		<dt>
+			@Html.DisplayNameFor(model => model.Username)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Username)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Timestamp)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Timestamp)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Moood)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Moood)
+		</dd>
+
+	</dl>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}
