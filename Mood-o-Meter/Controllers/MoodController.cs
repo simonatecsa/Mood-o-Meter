@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+
 using Mood_o_Meter.Models;
 
 namespace Mood_o_Meter.Controllers
@@ -36,9 +39,16 @@ namespace Mood_o_Meter.Controllers
         // GET: /Mood/Create
         public ActionResult Create()
         {
+            string fullName;
+            using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
+            {
+                UserPrincipal principal = UserPrincipal.FindByIdentity(context, User.Identity.Name);
+                fullName = principal.ToString();
+            }
+
             Mood mood = new Mood
             {
-                Username = User.Identity.Name,
+                Username = fullName,
                 Timestamp = DateTime.Now
             };
             return View(mood);
