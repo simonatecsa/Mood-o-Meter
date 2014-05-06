@@ -16,8 +16,6 @@ namespace Mood_o_Meter.Controllers
     {
         private MoMContext db = new MoMContext();
 
-        //
-        // GET: /Mood/
         public ActionResult Index()
         {
             return View(db.Moods.OrderByDescending(m=>m.Timestamp));
