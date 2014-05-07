@@ -19,6 +19,7 @@
 
         <div class="control-group">
             @Html.LabelFor(model => model.Username, new { @class = "control-label" })
+            
             <div class="controls">
                 @Html.TextBoxFor(model => model.Username, new { @readonly = "readonly" })
             </div>
@@ -26,6 +27,7 @@
 
         <div class="control-group">
             @Html.LabelFor(model => model.Timestamp, new { @class = "control-label" })
+            
             <div class="controls">
                 @Html.TextBoxFor(model => model.Timestamp, new { @readonly = "readonly" })
             </div>
