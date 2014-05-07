@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
 namespace Mood_o_Meter.Models
 {
@@ -21,7 +17,6 @@ namespace Mood_o_Meter.Models
         {
         }
 
-        public DbSet<Mood_o_Meter.Models.Mood> Moods { get; set; }
-
+        public DbSet<Mood> Moods { get; set; }
     }
 }

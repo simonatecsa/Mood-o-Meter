@@ -11,34 +11,36 @@
 <fieldset>
     <legend>Mood</legend>
 
-	<dl>
-		<dt>
-			@Html.DisplayNameFor(model => model.Username)
-		</dt>
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
 
-		<dd>
-			@Html.DisplayFor(model => model.Username)
-		</dd>
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
 
-		<dt>
-			@Html.DisplayNameFor(model => model.Timestamp)
-		</dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Timestamp)
+        </dt>
 
-		<dd>
-			@Html.DisplayFor(model => model.Timestamp)
-		</dd>
+        <dd>
+            @Html.DisplayFor(model => model.Timestamp)
+        </dd>
 
-		<dt>
-			@Html.DisplayNameFor(model => model.Moood)
-		</dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Moood)
+        </dt>
 
-		<dd>
-			@Html.DisplayFor(model => model.Moood)
-		</dd>
+        <dd>
+            @Html.DisplayFor(model => model.Moood)
+        </dd>
 
-	</dl>
+    </dl>
 </fieldset>
-@using (Html.BeginForm()) {
+
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">

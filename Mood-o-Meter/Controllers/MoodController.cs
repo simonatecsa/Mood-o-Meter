@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
-using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 
 using Mood_o_Meter.Models;
@@ -14,33 +11,32 @@ namespace Mood_o_Meter.Controllers
 {
     public class MoodController : Controller
     {
-        private MoMContext db = new MoMContext();
+        private readonly MoMContext _dbContext = new MoMContext();
 
         public ActionResult Index()
         {
-            return View(db.Moods.OrderByDescending(m=>m.Timestamp));
+            return View(_dbContext.Moods.OrderByDescending(m => m.Timestamp));
         }
 
-        //
-        // GET: /Mood/Details/5
         public ActionResult Details(Int32 id)
         {
-            Mood mood = db.Moods.Find(id);
+            Mood mood = _dbContext.Moods.Find(id);
+
             if (mood == null)
             {
                 return HttpNotFound();
             }
+
             return View(mood);
         }
 
-        //
-        // GET: /Mood/Create
         public ActionResult Create()
         {
             string fullName;
             using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
             {
                 UserPrincipal principal = UserPrincipal.FindByIdentity(context, User.Identity.Name);
+                Debug.Assert(principal != null);
                 fullName = principal.ToString();
             }
 
@@ -49,30 +45,27 @@ namespace Mood_o_Meter.Controllers
                 Username = fullName,
                 Timestamp = DateTime.Now
             };
+
             return View(mood);
         }
 
-        //
-        // POST: /Mood/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Mood mood)
         {
             if (ModelState.IsValid)
             {
-                db.Moods.Add(mood);
-                db.SaveChanges();
+                _dbContext.Moods.Add(mood);
+                _dbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View(mood);
         }
 
-        //
-        // GET: /Mood/Edit/5
         public ActionResult Edit(Int32 id)
         {
-            Mood mood = db.Moods.Find(id);
+            Mood mood = _dbContext.Moods.Find(id);
             if (mood == null)
             {
                 return HttpNotFound();
@@ -80,64 +73,59 @@ namespace Mood_o_Meter.Controllers
             return View(mood);
         }
 
-        //
-        // POST: /Mood/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Mood mood)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.Entry(mood).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(mood);
             }
-            return View(mood);
+
+            _dbContext.Entry(mood).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index");
         }
 
-        //
-        // GET: /Mood/Delete/5
         public ActionResult Delete(Int32 id)
         {
-            Mood mood = db.Moods.Find(id);
+            Mood mood = _dbContext.Moods.Find(id);
+
             if (mood == null)
             {
                 return HttpNotFound();
             }
+
             return View(mood);
         }
 
-        //
-        // POST: /Mood/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Int32 id)
         {
-            Mood mood = db.Moods.Find(id);
-            db.Moods.Remove(mood);
-            db.SaveChanges();
+            Mood mood = _dbContext.Moods.Find(id);
+            _dbContext.Moods.Remove(mood);
+            _dbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _dbContext.Dispose();
             base.Dispose(disposing);
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Record your mood";
-
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "You can contact us via email:";
-
             return View();
         }
-
     }
 }
