@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Web.Mvc;
-
 using Mood_o_Meter.Models;
 
 namespace Mood_o_Meter.Controllers
@@ -126,12 +125,6 @@ namespace Mood_o_Meter.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            _dbContext.Dispose();
-            base.Dispose(disposing);
-        }
-
         public ActionResult About()
         {
             ViewBag.Message = "Record your mood";
@@ -142,6 +135,21 @@ namespace Mood_o_Meter.Controllers
         {
             ViewBag.Message = "You can contact us via email:";
             return View();
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+
+            // Of course, we should obtain the username only once, when the authenticated session starts.
+            // Until coding that, obtain it on every web action call.
+            ViewBag.Username = ObtainFullNameOfCurrentUser();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _dbContext.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
