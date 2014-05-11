@@ -45,6 +45,18 @@ namespace Mood_o_Meter.Controllers
 
         private string GetUsername()
         {
+            try
+            {
+                return GetUsernameFromAD();
+            }
+            catch (Exception)
+            {
+                return User.Identity.Name;
+            }
+        }
+
+        private string GetUsernameFromAD()
+        {
             using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
             {
                 UserPrincipal principal = UserPrincipal.FindByIdentity(context, User.Identity.Name);
