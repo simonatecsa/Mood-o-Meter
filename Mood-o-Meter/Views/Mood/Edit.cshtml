@@ -19,16 +19,14 @@
         <div class="control-group">
             @Html.LabelFor(model => model.Username, new { @class = "control-label" })
 			<div class="controls">
-				@Html.EditorFor(model => model.Username)
-				@Html.ValidationMessageFor(model => model.Username, null, new { @class = "help-inline" })
+				@Html.TextBoxFor(m => m.Username, new { @readonly="readonly" })
 			</div>
 		</div>
 
         <div class="control-group">
             @Html.LabelFor(model => model.Timestamp, new { @class = "control-label" })
 			<div class="controls">
-				@Html.EditorFor(model => model.Timestamp)
-				@Html.ValidationMessageFor(model => model.Timestamp, null, new { @class = "help-inline" })
+				@Html.TextBoxFor(m => m.Timestamp, new { @readonly="readonly" })
 			</div>
 		</div>
 
