@@ -35,19 +35,21 @@ namespace Mood_o_Meter.Controllers
         // GET: /Mood/Create
         public ActionResult Create()
         {
-            string fullName;
-            using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
-            {
-                UserPrincipal principal = UserPrincipal.FindByIdentity(context, User.Identity.Name);
-                fullName = principal.ToString();
-            }
-
             Mood mood = new Mood
             {
-                Username = fullName,
+                Username = GetUsername(),
                 Timestamp = DateTime.Now
             };
             return View(mood);
+        }
+
+        private string GetUsername()
+        {
+            using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
+            {
+                UserPrincipal principal = UserPrincipal.FindByIdentity(context, User.Identity.Name);
+                return principal.ToString();
+            }
         }
 
         //
