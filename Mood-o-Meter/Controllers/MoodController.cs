@@ -139,5 +139,10 @@ namespace Mood_o_Meter.Controllers
             return View();
         }
 
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            ViewBag.Username = GetUsername();
+        }
     }
 }
