@@ -70,14 +70,18 @@ namespace Mood_o_Meter.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Mood mood)
         {
+            return RedirectToAction("SaveMood", mood);
+        }
+
+        public ActionResult SaveMood(Mood mood)
+        {
             if (ModelState.IsValid)
             {
                 db.Moods.Add(mood);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
 
-            return View(mood);
+            return RedirectToAction("Index");
         }
 
         //
