@@ -35,11 +35,7 @@ namespace Mood_o_Meter.Controllers
         // GET: /Mood/Create
         public ActionResult Create()
         {
-            Mood mood = new Mood
-            {
-                Username = GetUsername(),
-                Timestamp = DateTime.Now
-            };
+            Mood mood = new Mood();
             return View(mood);
         }
 
@@ -77,6 +73,9 @@ namespace Mood_o_Meter.Controllers
         {
             if (ModelState.IsValid)
             {
+                mood.Username = GetUsername();
+                mood.Timestamp = DateTime.Now;
+
                 db.Moods.Add(mood);
                 db.SaveChanges();
             }
