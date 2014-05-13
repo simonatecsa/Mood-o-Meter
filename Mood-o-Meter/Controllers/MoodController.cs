@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
-using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 
 using Mood_o_Meter.Models;
@@ -39,19 +35,29 @@ namespace Mood_o_Meter.Controllers
         // GET: /Mood/Create
         public ActionResult Create()
         {
-            string fullName;
+            Mood mood = new Mood();
+            return View(mood);
+        }
+
+        private string GetUsername()
+        {
+            try
+            {
+                return GetUsernameFromAD();
+            }
+            catch (Exception)
+            {
+                return User.Identity.Name;
+            }
+        }
+
+        private string GetUsernameFromAD()
+        {
             using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
             {
                 UserPrincipal principal = UserPrincipal.FindByIdentity(context, User.Identity.Name);
-                fullName = principal.ToString();
+                return principal.ToString();
             }
-
-            Mood mood = new Mood
-            {
-                Username = fullName,
-                Timestamp = DateTime.Now
-            };
-            return View(mood);
         }
 
         //
@@ -60,14 +66,21 @@ namespace Mood_o_Meter.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Mood mood)
         {
+            return RedirectToAction("SaveMood", mood);
+        }
+
+        public ActionResult SaveMood(Mood mood)
+        {
             if (ModelState.IsValid)
             {
+                mood.Username = GetUsername();
+                mood.Timestamp = DateTime.Now;
+
                 db.Moods.Add(mood);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
 
-            return View(mood);
+            return RedirectToAction("Index");
         }
 
         //
@@ -141,5 +154,10 @@ namespace Mood_o_Meter.Controllers
             return View();
         }
 
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            ViewBag.Username = GetUsername();
+        }
     }
 }
