@@ -31,14 +31,6 @@ namespace Mood_o_Meter.Controllers
             return View(mood);
         }
 
-        //
-        // GET: /Mood/Create
-        public ActionResult Create()
-        {
-            Mood mood = new Mood();
-            return View(mood);
-        }
-
         private string GetUsername()
         {
             try
