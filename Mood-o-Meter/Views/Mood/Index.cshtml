@@ -1,3 +1,4 @@
+@using Mood_o_Meter.Models
 @model IEnumerable<Mood_o_Meter.Models.Mood>
 
 @{
@@ -9,7 +10,8 @@
     <h1>Mood-o-Meter</h1>
     <p class="lead">The place to record you mood. </p>
     <p>
-        @Html.ActionLink("Record your mood now", "Create") or review the list of moods below.
+        Record your mood now or review the list of moods below.
+        @{ Html.RenderPartial("Create", new Mood() { Moood = "?" }); }
     </p>
 </div>
 
