@@ -6,12 +6,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="scripts/moood.js"></script>
+
 <div class="hero-unit">
-    <h1>Mood-o-Meter</h1>
-    <p class="lead">The place to record you mood. </p>
     <p>
-        Record your mood now or review the list of moods below.
-        @{ Html.RenderPartial("Create", new Mood() { Moood = "?" }); }
+        <button type="button" class="btn-large" id="good-button">Good</button>
+        <button type="button" class="btn-large" id="bad-button">Bad</button>
     </p>
 </div>
 
@@ -49,3 +49,4 @@
 }
 
 </table>
+

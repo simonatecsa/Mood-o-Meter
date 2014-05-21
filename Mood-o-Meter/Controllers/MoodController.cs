@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 using Mood_o_Meter.Models;
@@ -55,24 +56,18 @@ namespace Mood_o_Meter.Controllers
         //
         // POST: /Mood/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Mood mood)
+        public ActionResult Create(string moood)
         {
-            return RedirectToAction("SaveMood", mood);
-        }
-
-        public ActionResult SaveMood(Mood mood)
-        {
-            if (ModelState.IsValid)
+            Mood mood = new Mood
             {
-                mood.Username = GetUsername();
-                mood.Timestamp = DateTime.Now;
+                Moood = moood,
+                Timestamp = DateTime.Now,
+                Username = GetUsername()
+            };
 
-                db.Moods.Add(mood);
-                db.SaveChanges();
-            }
-
-            return RedirectToAction("Index");
+            db.Moods.Add(mood);
+            db.SaveChanges();
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         //
