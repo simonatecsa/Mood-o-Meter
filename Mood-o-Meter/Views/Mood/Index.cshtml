@@ -1,12 +1,12 @@
 @using Mood_o_Meter.Models
-@model IEnumerable<Mood_o_Meter.Models.Mood>
+@model IEnumerable<Mood>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="scripts/moood.js"></script>
+<script src="scripts/moood.js" ></script>
 
 <div class="hero-unit">
     <p>
@@ -15,38 +15,18 @@
     </p>
 </div>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Timestamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Moood)
-        </th>
-        <th></th>
-    </tr>
+<table class="table" id="mood-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Moood)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Moood)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
+    <tbody id="mood-table-body">
+        
+    </tbody>
 </table>
 

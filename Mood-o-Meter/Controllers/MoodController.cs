@@ -1,5 +1,5 @@
 using System;
-using System.Data;
+using System.Data.Entity;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Net;
@@ -13,24 +13,33 @@ namespace Mood_o_Meter.Controllers
     {
         private MoMContext db = new MoMContext();
 
-        //
-        // GET: /Mood/
         public ActionResult Index()
         {
             return View(db.Moods.OrderByDescending(m=>m.Timestamp));
         }
 
-        //
-        // GET: /Mood/Details/5
-        public ActionResult Details(Int32 id)
+        [HttpPost]
+        public ActionResult Create(string moood)
         {
-            Mood mood = db.Moods.Find(id);
-            if (mood == null)
+            Mood mood = new Mood
             {
-                return HttpNotFound();
-            }
-            return View(mood);
+                Moood = moood,
+                Timestamp = DateTime.Now,
+                Username = GetUsername()
+            };
+
+            db.Moods.Add(mood);
+            db.SaveChanges();
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+
+        [HttpGet]
+        public JsonResult GetMoods()
+        {
+            DbSet<Mood> moods = db.Moods;
+            return Json(moods, JsonRequestBehavior.AllowGet);
+        }
+
 
         private string GetUsername()
         {
@@ -51,74 +60,6 @@ namespace Mood_o_Meter.Controllers
                 UserPrincipal principal = UserPrincipal.FindByIdentity(context, User.Identity.Name);
                 return principal.ToString();
             }
-        }
-
-        //
-        // POST: /Mood/Create
-        [HttpPost]
-        public ActionResult Create(string moood)
-        {
-            Mood mood = new Mood
-            {
-                Moood = moood,
-                Timestamp = DateTime.Now,
-                Username = GetUsername()
-            };
-
-            db.Moods.Add(mood);
-            db.SaveChanges();
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
-        }
-
-        //
-        // GET: /Mood/Edit/5
-        public ActionResult Edit(Int32 id)
-        {
-            Mood mood = db.Moods.Find(id);
-            if (mood == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mood);
-        }
-
-        //
-        // POST: /Mood/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Mood mood)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(mood).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(mood);
-        }
-
-        //
-        // GET: /Mood/Delete/5
-        public ActionResult Delete(Int32 id)
-        {
-            Mood mood = db.Moods.Find(id);
-            if (mood == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mood);
-        }
-
-        //
-        // POST: /Mood/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Int32 id)
-        {
-            Mood mood = db.Moods.Find(id);
-            db.Moods.Remove(mood);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
