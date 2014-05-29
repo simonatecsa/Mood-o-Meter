@@ -1,45 +1,41 @@
 ﻿window.onload = function () {
+
     var goodButton = document.getElementById("good-button");
     goodButton.onclick = good;
 
     var badbutton = document.getElementById("bad-button");
     badbutton.onclick = bad;
 
-    foo();
+    reloadMoods();
 };
 
-
 function good() {
-    var xmlhttp = new window.XMLHttpRequest();
-    xmlhttp.open("POST", "/Mood/Create", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    xmlhttp.onreadystatechange = foo;
-
-    xmlhttp.send("moood=goood");
-
+    sendMood("goood");
 }
 
 function bad() {
-    var xmlhttp = new window.XMLHttpRequest();
-    xmlhttp.open("POST", "/Mood/Create", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    xmlhttp.onreadystatechange = foo;
-
-    xmlhttp.send("moood=baaah");
+    sendMood("badie");
 }
 
-function foo() {
-    var xmlhttp = new window.XMLHttpRequest();
-    xmlhttp.open("GET", "/Mood/GetMoods", true);
-    xmlhttp.onreadystatechange =function () {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            var moods = JSON.parse(xmlhttp.responseText);
-            showMoods(moods);
+function sendMood(moood) {
+    $.ajax({
+        url: "/Mood/Create",
+        type: "POST",
+        data: {
+            moood: moood
+        },
+        complete: reloadMoods
+    });
+}
+
+function reloadMoods() {
+    $.ajax({
+        url: "/Mood/GetMoods",
+        type: "GET",
+        success: function (result) {
+            showMoods(result);
         }
-    };
-    xmlhttp.send();
+    });
 }
 
 
@@ -56,6 +52,4 @@ function showMoods(moods) {
 
     var oldMoodTableBody = document.getElementById("mood-table-body");
     oldMoodTableBody.parentNode.replaceChild(moodTableBody, oldMoodTableBody);
-
-
 }
