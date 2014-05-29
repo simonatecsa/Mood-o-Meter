@@ -116,6 +116,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\MoMContext-20130721140547.mdf" />
+    <Content Include="App_Data\MoMContext-20130721140547_log.ldf" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -152,9 +154,7 @@
     <Content Include="Views\Mood\Edit.cshtml" />
     <Content Include="Views\Mood\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
