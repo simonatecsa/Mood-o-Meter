@@ -154,7 +154,9 @@
     <Content Include="Views\Mood\Edit.cshtml" />
     <Content Include="Views\Mood\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Hubs\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
