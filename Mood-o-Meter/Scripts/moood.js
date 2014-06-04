@@ -13,7 +13,9 @@
         alert('Hello!');
     }
 
-    moodHub.server.hello();
+    $.connection.hub.start().done(function () {
+        moodHub.server.hello();
+    });
 };
 
 function good() {
