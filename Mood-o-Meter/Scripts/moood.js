@@ -7,6 +7,13 @@
     badbutton.onclick = bad;
 
     reloadMoods();
+
+    var moodHub = $.connection.moodHub;
+    moodHub.client.hello = function () {
+        alert('Hello!');
+    }
+
+    moodHub.server.hello();
 };
 
 function good() {

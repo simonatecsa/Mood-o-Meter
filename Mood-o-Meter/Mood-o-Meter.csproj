@@ -129,6 +129,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\MoodHub.cs" />
     <Compile Include="Models\MoMContext.cs" />
     <Compile Include="Models\Mood.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -174,9 +175,7 @@
     <Content Include="Views\Mood\Edit.cshtml" />
     <Content Include="Views\Mood\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Hubs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

@@ -4,7 +4,8 @@ using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-
+using Microsoft.AspNet.SignalR;
+using Mood_o_Meter.Hubs;
 using Mood_o_Meter.Models;
 
 namespace Mood_o_Meter.Controllers
@@ -30,6 +31,10 @@ namespace Mood_o_Meter.Controllers
 
             db.Moods.Add(mood);
             db.SaveChanges();
+
+            IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<MoodHub>();
+            hubContext.Clients.All.hello();
+
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
