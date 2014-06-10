@@ -6,11 +6,10 @@
     var badbutton = document.getElementById("bad-button");
     badbutton.onclick = bad;
 
-    reloadMoods();
 
     var moodHub = $.connection.moodHub;
     moodHub.client.hello = function () {
-        alert('Hello!');
+        reloadMoods();
     }
 
     $.connection.hub.start().done(function () {
