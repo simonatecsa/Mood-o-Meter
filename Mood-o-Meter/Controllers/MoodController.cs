@@ -45,6 +45,15 @@ namespace Mood_o_Meter.Controllers
             return Json(moods, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult GetMoodCloud()
+        {
+            DbSet<Mood> moods = db.Moods;
+            double totalMoods = moods.Count();
+            var distinctMoods = moods.GroupBy(m => m.Moood).Select(m => new { value = m.Key, weight = (double)m.Count()/totalMoods });
+            return Json(distinctMoods, JsonRequestBehavior.AllowGet);
+        }
+
 
         private string GetUsername()
         {

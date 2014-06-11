@@ -9,12 +9,14 @@
 
     var moodHub = $.connection.moodHub;
     moodHub.client.hello = function () {
-        reloadMoods();
+        showMoodCloud();
     }
 
     $.connection.hub.start().done(function () {
         moodHub.server.hello();
     });
+
+    showMoodCloud();
 };
 
 function good() {
@@ -31,14 +33,23 @@ function sendMood(moood) {
         type: "POST",
         data: {
             moood: moood
-        },
-        complete: reloadMoods
+        }
     });
 }
 
 function reloadMoods() {
     $.ajax({
         url: "/Mood/GetMoods",
+        type: "GET",
+        success: function (result) {
+            showMoods(result);
+        }
+    });
+}
+
+function showMoodCloud() {
+    $.ajax({
+        url: "/Mood/GetMoodCloud",
         type: "GET",
         success: function (result) {
             showMoods(result);
@@ -55,7 +66,10 @@ function showMoods(moods) {
     for(index=0; index < moods.length; index++) {
         var row = moodTableBody.insertRow(0);
         var cell = row.insertCell(0);
-        cell.innerText = moods[index].Moood;
+        cell.innerText = moods[index].value;
+        cell.style.fontSize = Math.log(moods[index].weight * 80) + "em";
+        var anothercell = row.insertCell(0);
+        anothercell.innerText = moods[index].weight;
     }
 
     var oldMoodTableBody = document.getElementById("mood-table-body");
