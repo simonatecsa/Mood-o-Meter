@@ -62,14 +62,26 @@ function showMoods(moods) {
     //http://stackoverflow.com/questions/7271490/delete-all-rows-in-an-html-table
     var moodTableBody = document.createElement('tbody');
     moodTableBody.id = "mood-table-body";
+
+    var moodList = document.getElementById('mood-list');
+    moodList.innerHTML = "";
+
+    var current_size = 2;
     var index;
     for(index=0; index < moods.length; index++) {
+        current_size -= 0.05;
+        if (current_size < 0.05)
+            break;
+
         var row = moodTableBody.insertRow(0);
         var cell = row.insertCell(0);
         cell.innerText = moods[index].value;
-        cell.style.fontSize = Math.log(moods[index].weight * 80) + "em";
-        var anothercell = row.insertCell(0);
-        anothercell.innerText = moods[index].weight;
+        cell.style.fontSize = current_size + "em";
+        //var anothercell = row.insertCell(0);
+        //anothercell.innerText = moods[index].weight;
+
+        moodList.innerHTML += '<span style="font-size:' + current_size + 'em">[' +
+            moods[index].value + ']</span>';
     }
 
     var oldMoodTableBody = document.getElementById("mood-table-body");

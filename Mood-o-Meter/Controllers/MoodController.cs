@@ -50,7 +50,7 @@ namespace Mood_o_Meter.Controllers
         {
             DbSet<Mood> moods = db.Moods;
             double totalMoods = moods.Count();
-            var distinctMoods = moods.GroupBy(m => m.Moood).Select(m => new { value = m.Key, weight = (double)m.Count()/totalMoods });
+            var distinctMoods = moods.GroupBy(m => m.Moood).Select(m => new { value = m.Key, weight = (double)m.Count()/totalMoods }).OrderByDescending(x=>x.weight);
             return Json(distinctMoods, JsonRequestBehavior.AllowGet);
         }
 
