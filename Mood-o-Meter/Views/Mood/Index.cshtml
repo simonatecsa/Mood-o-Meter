@@ -1,5 +1,5 @@
 @using Mood_o_Meter.Models
-@model IEnumerable<Mood_o_Meter.Models.Mood>
+@model IEnumerable<Mood>
 
 @{
     ViewBag.Title = "Index";
@@ -7,45 +7,32 @@
 }
 
 <div class="hero-unit">
-    <h1>Mood-o-Meter</h1>
-    <p class="lead">The place to record you mood. </p>
     <p>
-        Record your mood now or review the list of moods below.
-        @{ Html.RenderPartial("Create", new Mood() { Moood = "?" }); }
+        <button type="button" class="btn-large" id="good-button">Good</button>
+        <button type="button" class="btn-large" id="bad-button">Bad</button>
     </p>
 </div>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Timestamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Moood)
-        </th>
-        <th></th>
-    </tr>
+<svg id="mood-cloud" width="1200" height="400">
+</svg>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Moood)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<table class="table" id="mood-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Moood)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
+    <div id="mood-list"></div>
+    <tbody id="mood-table-body">
+        
+    </tbody>
 </table>
+
+@section Scripts
+{
+    <script src="~/scripts/moood.js" ></script>
+}
