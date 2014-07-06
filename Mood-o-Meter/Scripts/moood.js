@@ -16,7 +16,6 @@
         moodHub.server.hello();
     });
 
-    showMoodCloud();
 };
 
 function good() {
